@@ -14,12 +14,17 @@ export default function MissionCard({ mission }) {
   } else {
     shortenedDetails = details.substring(0, length);
   }
+
+  function clickCard() {
+    return (window.location.href = "/" + mission.rocket.rocket.id);
+  }
+
   return (
     <div>
       <Card
         elevation={1}
-        onClick={(e) => {
-          console.log(mission);
+        onClick={() => {
+          clickCard();
         }}
       >
         <CardMedia
@@ -28,7 +33,6 @@ export default function MissionCard({ mission }) {
           alt="launchimg"
           image={mission.links.flickr_images[0]}
         />
-
         <CardHeader title={mission.mission_name} />
         <CardContent>
           <Typography align="justify" variant="body2" color="textSecondary">

@@ -1,22 +1,19 @@
 import "./App.css";
-import { render } from "react-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
-  gql,
   HttpLink,
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import Missions from "./Components/Missions";
+import { Route, Routes } from "react-router-dom";
+import SelectedMission from "./Components/SelectedMission";
 
-const errorLink = onError(({ graphqlErrors, networkError }) => {
+const errorLink = onError(({ graphqlErrors }) => {
   if (graphqlErrors) {
-    graphqlErrors.map(({ message, location, path }) => {
-      alert(`Graphql error ${message}`);
-    });
+    graphqlErrors.map(({ message }) => alert(`Graphql error ${message}`));
   }
 });
 
@@ -32,7 +29,10 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Missions />
+      <Routes>
+        <Route path="/" element={<Missions />} />
+        <Route path=":id" element={<SelectedMission />} />
+      </Routes>
     </ApolloProvider>
   );
 }
