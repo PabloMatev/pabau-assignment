@@ -4,6 +4,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
+import { Link } from "react-router-dom";
 
 export default function MissionCard({ mission }) {
   let shortenedDetails;
@@ -15,31 +16,29 @@ export default function MissionCard({ mission }) {
     shortenedDetails = details.substring(0, length);
   }
 
-  function clickCard() {
-    return (window.location.href = "/" + mission.rocket.rocket.id);
-  }
-
   return (
     <div>
-      <Card
-        elevation={1}
-        onClick={() => {
-          clickCard();
+      <Link
+        to={{
+          pathname: "/" + mission.rocket.rocket.id,
         }}
+        style={{ textDecoration: "none" }}
       >
-        <CardMedia
-          component="img"
-          height="140"
-          alt="launchimg"
-          image={mission.links.flickr_images[0]}
-        />
-        <CardHeader title={mission.mission_name} />
-        <CardContent>
-          <Typography align="justify" variant="body2" color="textSecondary">
-            {shortenedDetails}
-          </Typography>
-        </CardContent>
-      </Card>
+        <Card elevation={1}>
+          <CardMedia
+            component="img"
+            height="140"
+            alt="launchimg"
+            image={mission.links.flickr_images[0]}
+          />
+          <CardHeader title={mission.mission_name} />
+          <CardContent>
+            <Typography align="justify" variant="body2" color="textSecondary">
+              {shortenedDetails}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Link>
     </div>
   );
 }

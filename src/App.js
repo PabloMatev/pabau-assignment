@@ -29,12 +29,14 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <Routes>
-        <Route path="/" element={<Missions />} />
-        <Route path=":id" element={<SelectedMission />} />
-      </Routes>
-    </ApolloProvider>
+    <div>
+      <ApolloProvider client={client}>
+        <Routes>
+          <Route path="/" element={<Missions />} />
+          <Route path=":id" element={<SelectedMission />} />
+        </Routes>
+      </ApolloProvider>
+    </div>
   );
 }
 

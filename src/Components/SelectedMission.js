@@ -11,6 +11,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function SelectedMission() {
   let params = useParams();
@@ -25,18 +26,20 @@ export default function SelectedMission() {
       setRocketImg(data.launchesPast[1].links.flickr_images[0]);
     }
   }, [data]);
-  console.log(rocket, rocketImg, "rocket");
-  function goBack() {
-    return (window.location.href = "/");
-  }
-  function goWiki() {
-    return (window.location.href = rocket.wikipedia);
-  }
+
   if (loading) return "Loading...";
   if (error) return "Error" + error;
   return (
     <div>
-      <Button onClick={() => goBack()}>Back To Missions</Button>
+      <Link
+        style={{ textDecoration: "none" }}
+        to={{
+          pathname: "/",
+        }}
+      >
+        Back To Missions
+      </Link>
+
       <Grid item xs={12} md={6} lg={12} padding="1em">
         <Card elevation={1}>
           <CardMedia
@@ -59,10 +62,7 @@ export default function SelectedMission() {
             <Typography align="justify" variant="body1" color="textSecondary">
               Owned by {rocket.company}
             </Typography>
-
-            <Button onClick={() => goWiki()} size="small">
-              Learn More
-            </Button>
+            <a href={rocket.wikipedia}>Learn More</a>
           </CardContent>
         </Card>
       </Grid>
