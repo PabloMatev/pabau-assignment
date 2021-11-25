@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const LOAD_MISSIONS = gql`
   query LoadMission {
-    launchesPast(offset: 10, limit: 30) {
+    launchesPast(offset: 10, limit: 100) {
       mission_name
       links {
         flickr_images

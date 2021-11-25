@@ -26,6 +26,13 @@ export default function SelectedMission() {
       setRocketImg(data.launchesPast[1].links.flickr_images[0]);
     }
   }, [data]);
+  let img = "";
+  if (rocketImg) {
+    img = rocketImg;
+  } else {
+    img =
+      "https://www.zurich.com/-/media/project/zurich/dotcom/services/images/404-error-glitch.gif?rev=e856417eaeb14ba9b64a875122e1f526&hash=8594D758B8D0DE4FB5E371F950BCE24A";
+  }
 
   if (loading) return "Loading...";
   if (error) return "Error" + error;
@@ -42,12 +49,7 @@ export default function SelectedMission() {
 
       <Grid item xs={12} md={6} lg={12} padding="1em">
         <Card elevation={1}>
-          <CardMedia
-            component="img"
-            height="500"
-            alt="rocket"
-            image={rocketImg.toString()}
-          />
+          <CardMedia component="img" height="500" alt="rocket" image={img} />
           <CardHeader title={rocket.name} />
           <CardContent>
             <Typography align="justify" variant="body1" color="textSecondary">
