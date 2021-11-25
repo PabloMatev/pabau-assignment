@@ -1,21 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { LOAD_ROCKET } from "../GraphQL/Queries";
 import { useParams } from "react-router";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 export default function SelectedMission() {
   let params = useParams();
-  var rocketId = params.id;
-
   const { data, loading, error } = useQuery(LOAD_ROCKET, {
-    variable: { rocketId: rocketId },
+    variables: { rocketId: params.id },
   });
-
+  const [rocket, setRocket] = useState([]);
+  const [rocketImg, setRocketImg] = useState([]);
+  useEffect(() => {
+    if (data) {
+      setRocket(data.launchesPast[1].rocket.rocket);
+      setRocketImg(data.launchesPast[1].links.flickr_images[0]);
+    }
+  }, [data]);
+  console.log(rocket, rocketImg, "rocket");
+  function goBack() {
+    return (window.location.href = "/");
+  }
+  function goWiki() {
+    return (window.location.href = rocket.wikipedia);
+  }
   if (loading) return "Loading...";
-  // if (error) return "error";
+  if (error) return "Error" + error;
   return (
     <div>
-      <button onClick={() => console.log(data)}>hello</button>
+      <Button onClick={() => goBack()}>Back To Missions</Button>
+      <Grid item xs={12} md={6} lg={12} padding="1em">
+        <Card elevation={1}>
+          <CardMedia
+            component="img"
+            height="500"
+            alt="rocket"
+            image={rocketImg.toString()}
+          />
+          <CardHeader title={rocket.name} />
+          <CardContent>
+            <Typography align="justify" variant="body1" color="textSecondary">
+              {rocket.description}
+            </Typography>
+            <Typography align="justify" variant="body1" color="textSecondary">
+              Created by {rocket.country}
+            </Typography>
+            <Typography align="justify" variant="body1" color="textSecondary">
+              The cost of a single launch is ${rocket.cost_per_launch} USD
+            </Typography>
+            <Typography align="justify" variant="body1" color="textSecondary">
+              Owned by {rocket.company}
+            </Typography>
+
+            <Button onClick={() => goWiki()} size="small">
+              Learn More
+            </Button>
+          </CardContent>
+        </Card>
+      </Grid>
     </div>
   );
 }

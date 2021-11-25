@@ -20,7 +20,7 @@ function Missions() {
   if (error) return "Error";
   return (
     <Container>
-      <Grid container spaciung={3} margin="1em">
+      <Grid container spacing={3} margin="1em">
         {missions.map((mission) => {
           return (
             <Grid item xs={12} md={6} lg={4} padding="1em">

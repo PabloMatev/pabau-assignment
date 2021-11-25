@@ -18,12 +18,40 @@ export const LOAD_MISSIONS = gql`
   }
 `;
 
+// export const LOAD_ROCKET = gql`
+//   query LoadRocket($rocketId: ID!) {
+//     rocket(id: $rocketId) {
+//       name
+//       company
+//       cost_per_launch
+//       description
+//       wikipedia
+//       type
+//       height {
+//         meters
+//       }
+//       engines {
+//         type
+//       }
+//     }
+//   }
+// `;
 export const LOAD_ROCKET = gql`
-  query LoadRocket($rocketId: ID!) {
-    rocket(id: "$rocketId") {
-      active
-      boosters
-      description
+  query LoadRocket($rocketId: String!) {
+    launchesPast(limit: 10, find: { rocket_id: $rocketId }) {
+      links {
+        flickr_images
+      }
+      rocket {
+        rocket {
+          name
+          wikipedia
+          description
+          country
+          company
+          cost_per_launch
+        }
+      }
     }
   }
 `;
